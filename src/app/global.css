@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .nav-item {
+    @apply text-sm font-medium hover:opacity-80 transition-opacity;
+  }
+  
+  .nav-item-active {
+    @apply text-blue-500;
+  }
+  
+  .dropdown-item {
+    @apply hover:bg-gradient-to-r from-blue-500/10 to-blue-600/10 transition-colors;
+  }
+  
+  .dropdown-item-active {
+    @apply bg-gradient-to-r from-blue-500/10 to-blue-600/10;
+  }
+}
