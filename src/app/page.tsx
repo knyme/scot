@@ -1,5 +1,5 @@
 import Homepage from '../components/homepage'
 
-export default function Page() {
+export default function Home() {
   return <Homepage />
 }

@@ -1,0 +1,108 @@
+'use client'
+
+import { useState, useEffect, useRef } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { LayoutGrid, DoorOpen, Home, Construction, Paintbrush, ChevronDown, Phone } from 'lucide-react'
+
+export default function Header() {
+  const [openService, setOpenService] = useState<string | null>(null)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false)
+        setOpenService(null)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  const services = [
+    {
+      id: 'windows',
+      icon: LayoutGrid,
+      title: 'Windows',
+      children: ['Casement', 'Tilt and turn', 'Sash']
+    },
+    {
+      id: 'doors',
+      icon: DoorOpen,
+      title: 'Doors',
+      children: ['uPvc', 'Composite', 'French/Patio', 'Bifolds']
+    },
+    {
+      id: 'conservatories',
+      icon: Home,
+      title: 'Conservatories',
+      children: []
+    },
+    {
+      id: 'roofs',
+      icon: Construction,
+      title: 'Roofs',
+      children: []
+    },
+    {
+      id: 'roughcasting',
+      icon: Construction,
+      title: 'Rough casting',
+      children: []
+    },
+    {
+      id: 'coatings',
+      icon: Paintbrush,
+      title: 'Coatings',
+      children: []
+    }
+  ]
+
+  return (
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-gray-800/50 backdrop-blur-md shadow-md text-white' : 'bg-transparent text-white'}`}>
+      <div className="container mx-auto px-4">
+        <nav className="flex justify-between items-center py-3">
+          <Link href="/" className="flex items-center">
+            <Image src="https://i.ibb.co/5jMQxr1/Shieldforsite.png" alt="Scotseal - Crafted to shield, built to last" width={180} height={180} />
+          </Link>
+          <div className="flex-grow flex justify-center space-x-8">
+            <Link href="/" className="nav-item font-bold">Home</Link>
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className={`nav-item inline-flex items-center gap-1 ${isDropdownOpen ? 'nav-item-active' : ''}`}
+              >
+                Services
+                <ChevronDown className="h-4 w-4" />
+              </button>
+              {isDropdownOpen && (
+                <div className="absolute left-0 mt-2 w-64 rounded-lg shadow-lg bg-white/95 backdrop-blur-sm">
+                  <div className="p-2">
+                    {services.map((service) => (
+                      <div key={service.id} className="relative mb-2">
+                        <button
+                          onClick={() => setOpenService(openService === service.id ? null : service.id)}
+                          className={`w-full text-left px-3 py-2 rounded-md text-gray-700 hover:text-gray-900 flex items-center gap-3 relative z-10 transition-all duration-200 ease-in-out dropdown-item ${
+                            openService === service.id ? 'dropdown-item-active' : ''
+                          }`}
+                        >
+                          <service.icon className="h-5 w-5 text-gray-500" />
+                          <span>{service.title}</span>
+                          {service.children.length > 0 && (
+                            <ChevronDown className={`h-4 w-4 ml-auto transition-transform duration-200 ${openService === service.id ? 'rotate-180' : ''}`} />
+                          )}
+                        </button>
+                        {openService === service.id && service.children.length > 0 && (
+                          <div className="ml-10 mt-1 space-y-1 bg-white rounded-md p-2">
+                            {
