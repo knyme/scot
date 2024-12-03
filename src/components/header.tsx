@@ -123,8 +123,8 @@ export default function Header() {
                   </div>
                 )}
               </div>
-              <Link href="/about" className="nav-item">About</Link>
-              <Link href="/contact" className="nav-item">Contact</Link>
+              <Link href="..app/about/page.tsx" className="nav-item">About</Link>
+              <Link href="../app/contact/page.tsx" className="nav-item">Contact</Link>
             </div>
             <div className="flex items-center space-x-4">
               <a href="tel:01413453993" className="flex items-center nav-item">
