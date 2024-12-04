@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { ArrowRight, Phone, Mail, MapPin } from 'lucide-react'
 
 export default function About() {
@@ -36,56 +35,56 @@ export default function About() {
     <div className="font-sans">
       <section className="bg-gray-100 py-20">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
-            <div className="md:flex">
-              <div className="md:flex-shrink-0">
-                <Image
-                  className="h-48 w-full object-cover md:w-48"
-                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
-                  alt="Building exterior"
-                  width={200}
-                  height={200}
-                />
-              </div>
-              <div className="p-8">
+          <div className="flex flex-col md:flex-row gap-8">
+            <div className="md:w-1/2">
+              <div className="bg-white rounded-lg shadow-xl overflow-hidden p-8">
                 <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">About Us</div>
                 <h1 className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">Crafting Excellence Since 2008</h1>
-                <p className="mt-4 max-w-2xl text-xl text-gray-500">
+                <p className="mt-4 text-xl text-gray-500">
                   Scotseal has been at the forefront of home improvement in Scotland, delivering premium windows, doors, and more to create dream homes across the nation.
                 </p>
+                <p className="mt-4 text-gray-600">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+                <p className="mt-4 text-gray-600">
+                  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+              </div>
+            </div>
+            <div className="md:w-1/2" ref={timelineRef}>
+              <h2 className="text-3xl font-bold mb-8">Our Journey</h2>
+              <div className="relative">
+                <div className="absolute left-0 w-1 bg-white h-full"></div>
+                <div 
+                  className="absolute left-0 w-1 bg-blue-200 h-full transition-all duration-500 ease-in-out" 
+                  style={{ height: `${((activeYear - 2008) / (2024 - 2008)) * 100}%` }}
+                ></div>
+                <div 
+                  className="absolute left-0 w-4 h-4 bg-blue-500 rounded-full -ml-2 transition-all duration-500 ease-in-out" 
+                  style={{ top: `${((activeYear - 2008) / (2024 - 2008)) * 100}%` }}
+                ></div>
+                {milestones.map((milestone, index) => (
+                  <div key={milestone.year} className="mb-8 flex items-center w-full">
+                    <div className="w-full bg-white p-4 rounded-lg shadow-md">
+                      <h3 className="text-lg font-semibold">{milestone.year}: {milestone.title}</h3>
+                      <p className="text-gray-600">{milestone.description}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-20" ref={timelineRef}>
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Our Journey</h2>
-          <div className="relative">
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-blue-200 h-full"></div>
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-3 h-3 bg-blue-500 rounded-full" style={{ top: `${((activeYear - 2008) / (2024 - 2008)) * 100}%` }}></div>
-            {milestones.map((milestone, index) => (
-              <div key={milestone.year} className={`mb-8 flex justify-between items-center w-full ${index % 2 === 0 ? 'flex-row-reverse' : ''}`}>
-                <div className="w-5/12"></div>
-                <div className={`w-5/12 p-4 rounded-lg shadow-md ${milestone.year <= activeYear ? 'bg-blue-100' : 'bg-gray-100'}`}>
-                  <h3 className="text-lg font-semibold">{milestone.year}: {milestone.title}</h3>
-                  <p className="text-gray-600">{milestone.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-gray-100 py-20">
+      <section className="bg-white py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Meet Our Team</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {['Michael', 'Mark', 'Dylan'].map((name, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
+              <div key={index} className="bg-gray-100 rounded-lg shadow-md overflow-hidden">
                 <Image
-                  src={`https://source.unsplash.com/random/400x400?portrait&${index}`}
+                  src={`/img/${name.toLowerCase()}.jpg`}
                   alt={`${name}'s portrait`}
                   width={400}
                   height={400}
@@ -101,7 +100,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="py-20">
+      <section className="bg-gray-100 py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">Get in Touch</h2>
           <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
@@ -116,7 +115,7 @@ export default function About() {
                   </li>
                   <li className="flex items-center">
                     <Mail className="mr-4" />
-                    <span>info@scotseal.com</span>
+                    <span>info@scotseal.co.uk</span>
                   </li>
                   <li className="flex items-center">
                     <MapPin className="mr-4" />
@@ -125,7 +124,7 @@ export default function About() {
                 </ul>
               </div>
               <div className="p-8 md:w-2/3">
-                <form className="space-y-4">
+                <form action="https://formsubmit.co/info@scotseal.co.uk" method="POST" className="space-y-4">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
                     <input type="text" id="name" name="name" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
@@ -133,6 +132,10 @@ export default function About() {
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
                     <input type="email" id="email" name="email" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
+                  </div>
+                  <div>
+                    <label htmlFor="address" className="block text-sm font-medium text-gray-700">Address</label>
+                    <input type="text" id="address" name="address" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                   </div>
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>

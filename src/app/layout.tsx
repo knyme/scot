@@ -1,11 +1,13 @@
 import './globals.css'
-import type { Metadata } from 'next'
-import Header from '../components/header'
-import Footer from '../components/footer'
+import { Inter } from 'next/font/google'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 
-export const metadata: Metadata = {
-  title: 'Scotseal - Premium Windows, Doors & Home Improvements',
-  description: 'Premium windows, doors, and home improvements. Creating dream homes across Scotland since 2008.',
+const inter = Inter({ subsets: ['latin'] })
+
+export const metadata = {
+  title: 'Scotseal',
+  description: 'Premium windows, doors, and home improvements in Scotland',
 }
 
 export default function RootLayout({
@@ -15,11 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="flex flex-col min-h-screen">
+      <body className={inter.className}>
         <Header />
-        <main className="flex-grow">
-          {children}
-        </main>
+        <main>{children}</main>
         <Footer />
       </body>
     </html>
