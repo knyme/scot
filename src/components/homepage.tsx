@@ -119,67 +119,7 @@ export default function Homepage() {
     <div className="font-sans">
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-gray-800/50 backdrop-blur-md shadow-md text-white' : 'bg-transparent text-white'}`}>
         <div className="container mx-auto px-4">
-          <nav className="flex justify-between items-center py-3">
-            <a href="/" className="flex items-center">
-              <Image src="https://i.ibb.co/5jMQxr1/Shieldforsite.png" alt="Scotseal - Crafted to shield, built to last" width={180} height={180} />
-            </a>
-            <div className="flex-grow flex justify-center space-x-8">
-              <a href="#home" className="nav-item font-bold">Home</a>
-              <div className="relative" ref={dropdownRef}>
-                <button
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className={`nav-item inline-flex items-center gap-1 ${isDropdownOpen ? 'nav-item-active' : ''}`}
-                >
-                  Services
-                  <ChevronDown className="h-4 w-4" />
-                </button>
-                {isDropdownOpen && (
-                  <div className="absolute left-0 mt-2 w-64 rounded-lg shadow-lg bg-white/95 backdrop-blur-sm">
-                    <div className="p-2">
-                      {services.map((service) => (
-                        <div key={service.id} className="relative mb-2">
-                          <button
-                            onClick={() => setOpenService(openService === service.id ? null : service.id)}
-                            className={`w-full text-left px-3 py-2 rounded-md text-gray-700 hover:text-gray-900 flex items-center gap-3 relative z-10 transition-all duration-200 ease-in-out dropdown-item ${
-                              openService === service.id ? 'dropdown-item-active' : ''
-                            }`}
-                          >
-                            <service.icon className="h-5 w-5 text-gray-500" />
-                            <span>{service.title}</span>
-                            {service.children.length > 0 && (
-                              <ChevronDown className={`h-4 w-4 ml-auto transition-transform duration-200 ${openService === service.id ? 'rotate-180' : ''}`} />
-                            )}
-                          </button>
-                          {openService === service.id && service.children.length > 0 && (
-                            <div className="ml-10 mt-1 space-y-1 bg-white rounded-md p-2">
-                              {service.children.map((child) => (
-                                <a
-                                  key={child}
-                                  href="#"
-                                  className="block px-3 py-1 text-sm text-gray-600 hover:text-gray-900 rounded-md hover:bg-gray-50 dropdown-item"
-                                >
-                                  {child}
-                                </a>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-              <a href="#about" className="nav-item">About</a>
-              <a href="#contact" className="nav-item">Contact</a>
-            </div>
-            <div className="flex items-center space-x-4">
-              <a href="tel:01413453993" className="flex items-center nav-item">
-                <Phone className="h-5 w-5 mr-2" />
-                0141 345 3993
-              </a>
-              <a href="#quote" className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Get a quote</a>
-            </div>
-          </nav>
+          {/* Removed Navigation Section */}
         </div>
       </header>
 
@@ -257,78 +197,6 @@ export default function Homepage() {
                 </p>
               </div>
               <div className="hidden md:block w-1/2 bg-cover bg-center" style={{backgroundImage: "url('https://images.unsplash.com/photo-1653749576880-7d7caa5ecb62?q=80&w=3687&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')"}}></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="container mx-auto px-4 py-16">
-        <div className="rounded-3xl overflow-hidden" style={{
-          backgroundImage: `url(${products[activeProduct].background})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
-        }}>
-          <div className="py-16 px-8">
-            <div className="flex justify-between items-center">
-              <div className="max-w-xl">
-                <h2 className="text-6xl font-bold leading-tight mb-6 text-white">
-                  SCOTTISH
-                  <br />
-                  CRAFTSMANSHIP
-                  <br />
-                  EXCELLENCE
-                </h2>
-                <p className="text-white text-lg mb-8">
-                  {products[activeProduct].description}
-                </p>
-                <a
-                  href="#products"
-                  className="inline-flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full hover:bg-gray-800 transition-colors"
-                >
-                  SEE PRODUCTS
-                  <ArrowRight className="w-4 h-4" />
-                </a>
-              </div>
-
-              <div className="flex flex-col gap-4">
-                {products.map((product, index) => (
-                  <div
-                    key={index}
-                    className={`w-72 rounded-2xl p-4 cursor-pointer transition-transform hover:scale-105 ${
-                      index === 0 ? 'bg-blue-600/80' : 'bg-blue-800/80'
-                    }`}
-                    onClick={() => setActiveProduct(index)}
-                  >
-                    <div className="flex items-start gap-4">
-                      <Image
-                        src={product.image}
-                        alt={product.title}
-                        width={80}
-                        height={80}
-                        className="rounded-lg object-cover"
-                      />
-                      <div className="text-white">
-                        <p className="text-sm">{product.category}</p>
-                        <h3 className="font-bold">{product.title}</h3>
-                        <button className="text-sm underline">
-                          Explore
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-16 border-t border-white/20 pt-8">
-              <div className="flex justify-between items-center">
-                {features.map((feature, index) => (
-                  <div key={index} className="flex items-center gap-2">
-                    <feature.icon className="w-5 h-5 text-white" />
-                    <span className="text-sm font-medium text-white">{feature.text}</span>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
         </div>
