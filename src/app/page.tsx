@@ -1,12 +1,16 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, Star, ChevronDown, Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, ExternalLink, Clock, Shield, Zap, ThumbsUp, Sparkles, Users } from 'lucide-react'
+import { LayoutGrid, DoorOpen, Home, Construction, Paintbrush, ChevronDown, Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, ArrowRight, Star, ExternalLink, Clock, Shield, Zap, ThumbsUp, Sparkles, Users } from 'lucide-react'
 
-export default function Home() {
+export default function Homepage() {
+  const [openService, setOpenService] = useState<string | null>(null)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
   const [activeProduct, setActiveProduct] = useState(0)
+  const dropdownRef = useRef<HTMLDivElement>(null)
 
   const products = [
     {
@@ -54,9 +58,133 @@ export default function Home() {
     }
   ]
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false)
+        setOpenService(null)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  const services = [
+    {
+      id: 'windows',
+      icon: LayoutGrid,
+      title: 'Windows',
+      children: ['Casement', 'Tilt and turn', 'Sash']
+    },
+    {
+      id: 'doors',
+      icon: DoorOpen,
+      title: 'Doors',
+      children: ['uPvc', 'Composite', 'French/Patio', 'Bifolds']
+    },
+    {
+      id: 'conservatories',
+      icon: Home,
+      title: 'Conservatories',
+      children: []
+    },
+    {
+      id: 'roofs',
+      icon: Construction,
+      title: 'Roofs',
+      children: []
+    },
+    {
+      id: 'roughcasting',
+      icon: Construction,
+      title: 'Rough casting',
+      children: []
+    },
+    {
+      id: 'coatings',
+      icon: Paintbrush,
+      title: 'Coatings',
+      children: []
+    }
+  ]
+
   return (
     <div className="font-sans">
-      <section id="home" className="relative min-h-screen flex items-center">
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-gray-800/50 backdrop-blur-md shadow-md text-white' : 'bg-transparent text-white'}`}>
+        <div className="container mx-auto px-4">
+          <nav className="flex justify-between items-center py-3">
+            <Link href="/" className="flex items-center">
+              <Image src="https://i.ibb.co/5jMQxr1/Shieldforsite.png" alt="Scotseal - Crafted to shield, built to last" width={180} height={180} />
+            </Link>
+            <div className="flex-grow flex justify-center space-x-8">
+              <Link href="/" className="nav-item font-bold">Home</Link>
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className={`nav-item inline-flex items-center gap-1 ${isDropdownOpen ? 'nav-item-active' : ''}`}
+                >
+                  Services
+                  <ChevronDown className="h-4 w-4" />
+                </button>
+                {isDropdownOpen && (
+                  <div className="absolute left-0 mt-2 w-64 rounded-lg shadow-lg bg-white/95 backdrop-blur-sm">
+                    <div className="p-2">
+                      {services.map((service) => (
+                        <div key={service.id} className="relative mb-2">
+                          <button
+                            onClick={() => setOpenService(openService === service.id ? null : service.id)}
+                            className={`w-full text-left px-3 py-2 rounded-md text-gray-700 hover:text-gray-900 flex items-center gap-3 relative z-10 transition-all duration-200 ease-in-out dropdown-item ${
+                              openService === service.id ? 'dropdown-item-active' : ''
+                            }`}
+                          >
+                            <service.icon className="h-5 w-5 text-gray-500" />
+                            <span>{service.title}</span>
+                            {service.children.length > 0 && (
+                              <ChevronDown className={`h-4 w-4 ml-auto transition-transform duration-200 ${openService === service.id ? 'rotate-180' : ''}`} />
+                            )}
+                          </button>
+                          {openService === service.id && service.children.length > 0 && (
+                            <div className="ml-10 mt-1 space-y-1 bg-white rounded-md p-2">
+                              {service.children.map((child) => (
+                                <Link
+                                  key={child}
+                                  href={`/services/${service.id}/${child.toLowerCase().replace(/\s+/g, '-')}`}
+                                  className="block px-3 py-1 text-sm text-gray-600 hover:text-gray-900 rounded-md hover:bg-gray-50 dropdown-item"
+                                >
+                                  {child}
+                                </Link>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+              <Link href="/about" className="nav-item">About</Link>
+              <Link href="/contact" className="nav-item">Contact</Link>
+            </div>
+            <div className="flex items-center space-x-4">
+              <Link href="tel:01413453993" className="flex items-center nav-item">
+                <Phone className="h-5 w-5 mr-2" />
+                0141 345 3993
+              </Link>
+              <Link href="/quote" className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Get a quote</Link>
+            </div>
+          </nav>
+        </div>
+      </header>
+
+      <section id="home" className="relative min-h-screen flex items-center bg-cover bg-center">
         <Image
           src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/oliur-POycdKPE8KQ-unsplash.jpg-el6ZLrfC5c529S407Xa0SRoa76LqIL.jpeg"
           alt="Hero background"
@@ -168,13 +296,13 @@ export default function Home() {
                 <p className="text-white text-lg mb-8">
                   {products[activeProduct].description}
                 </p>
-                <a
+                <Link
                   href="#products"
                   className="inline-flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full hover:bg-gray-800 transition-colors"
                 >
                   SEE PRODUCTS
                   <ArrowRight className="w-4 h-4" />
-                </a>
+                </Link>
               </div>
 
               <div className="flex flex-col gap-4">
@@ -283,12 +411,12 @@ export default function Home() {
                   <div className="text-sm text-gray-400">avg. response time</div>
                 </div>
               </div>
-              <a 
+              <Link 
                 href="#" 
                 className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
               >
                 See 275+ reviews on Trustpilot →
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -304,10 +432,10 @@ export default function Home() {
             <div>
               <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
               <ul className="space-y-2">
-                <li><a href="#home" className="hover:text-blue-400 transition-colors">Home</a></li>
-                <li><a href="#about" className="hover:text-blue-400 transition-colors">About</a></li>
-                <li><a href="#services" className="hover:text-blue-400 transition-colors">Services</a></li>
-                <li><a href="#contact" className="hover:text-blue-400 transition-colors">Contact</a></li>
+                <li><Link href="/" className="hover:text-blue-400 transition-colors">Home</Link></li>
+                <li><Link href="/about" className="hover:text-blue-400 transition-colors">About</Link></li>
+                <li><Link href="/services" className="hover:text-blue-400 transition-colors">Services</Link></li>
+                <li><Link href="/contact" className="hover:text-blue-400 transition-colors">Contact</Link></li>
               </ul>
             </div>
             <div>
@@ -319,10 +447,10 @@ export default function Home() {
             <div>
               <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
               <div className="flex space-x-4">
-                <a href="#" className="hover:text-blue-400 transition-colors"><Facebook className="w-6 h-6" /></a>
-                <a href="#" className="hover:text-blue-400 transition-colors"><Twitter className="w-6 h-6" /></a>
-                <a href="#" className="hover:text-blue-400 transition-colors"><Instagram className="w-6 h-6" /></a>
-                <a href="#" className="hover:text-blue-400 transition-colors"><Linkedin className="w-6 h-6" /></a>
+                <Link href="#" className="hover:text-blue-400 transition-colors"><Facebook className="w-6 h-6" /></Link>
+                <Link href="#" className="hover:text-blue-400 transition-colors"><Twitter className="w-6 h-6" /></Link>
+                <Link href="#" className="hover:text-blue-400 transition-colors"><Instagram className="w-6 h-6" /></Link>
+                <Link href="#" className="hover:text-blue-400 transition-colors"><Linkedin className="w-6 h-6" /></Link>
               </div>
             </div>
           </div>

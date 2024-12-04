@@ -1,162 +1,151 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
-import { Shield, Award, Users, Clock, ChevronRight } from 'lucide-react'
+import Link from 'next/link'
+import { ArrowRight, Phone, Mail, MapPin } from 'lucide-react'
 
 export default function About() {
-  const statsRef = useRef<HTMLDivElement>(null)
-  
+  const [activeYear, setActiveYear] = useState(2008)
+  const timelineRef = useRef<HTMLDivElement>(null)
+
+  const milestones = [
+    { year: 2008, title: 'Founded', description: 'Scotseal was established with a vision to provide top-quality windows and doors to Scottish homes.' },
+    { year: 2012, title: 'Expansion', description: 'We expanded our product range to include conservatories and roofing solutions.' },
+    { year: 2016, title: 'Innovation', description: 'Introduced cutting-edge energy-efficient products, setting new industry standards.' },
+    { year: 2020, title: 'Nationwide', description: 'Expanded our services to cover all of Scotland, from the Borders to the Highlands.' },
+    { year: 2024, title: 'Future Focus', description: 'Continuing to innovate with smart home integration and sustainable materials.' },
+  ]
+
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-in')
-          }
-        })
-      },
-      { threshold: 0.1 }
-    )
+    const handleScroll = () => {
+      if (timelineRef.current) {
+        const { top, height } = timelineRef.current.getBoundingClientRect()
+        const scrollPosition = window.innerHeight - top
+        const scrollPercentage = Math.min(Math.max(scrollPosition / height, 0), 1)
+        const activeIndex = Math.floor(scrollPercentage * milestones.length)
+        setActiveYear(milestones[activeIndex]?.year || 2008)
+      }
+    }
 
-    const elements = document.querySelectorAll('.fade-in')
-    elements.forEach((el) => observer.observe(el))
-
-    return () => observer.disconnect()
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center bg-gray-900">
-        <Image
-          src="https://images.unsplash.com/photo-1531973576160-7125cd663d86"
-          alt="Modern building facade"
-          fill
-          className="object-cover opacity-50"
-        />
-        <div className="relative z-10 text-center text-white">
-          <h1 className="text-6xl font-bold mb-6">Our Story</h1>
-          <p className="text-xl max-w-2xl mx-auto">
-            Since 2008, we've been transforming homes across Scotland with 
-            exceptional craftsmanship and unwavering commitment to quality.
-          </p>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section ref={statsRef} className="py-20 bg-white">
+    <div className="font-sans">
+      <section className="bg-gray-100 py-20">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {[
-              { number: "15+", label: "Years Experience", icon: Clock },
-              { number: "5000+", label: "Projects Completed", icon: Shield },
-              { number: "98%", label: "Customer Satisfaction", icon: Users },
-              { number: "25+", label: "Industry Awards", icon: Award },
-            ].map((stat, index) => (
-              <div key={index} className="fade-in text-center p-6 rounded-lg bg-gray-50 transform hover:scale-105 transition-transform duration-300">
-                <stat.icon className="w-12 h-12 mx-auto mb-4 text-blue-600" />
-                <h3 className="text-4xl font-bold mb-2">{stat.number}</h3>
-                <p className="text-gray-600">{stat.label}</p>
+          <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
+            <div className="md:flex">
+              <div className="md:flex-shrink-0">
+                <Image
+                  className="h-48 w-full object-cover md:w-48"
+                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
+                  alt="Building exterior"
+                  width={200}
+                  height={200}
+                />
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Journey Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-4xl font-bold mb-12 text-center">Our Journey</h2>
-            <div className="space-y-12">
-              {[
-                {
-                  year: "2008",
-                  title: "The Beginning",
-                  description: "Founded with a vision to revolutionize home improvements in Scotland.",
-                  image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd"
-                },
-                {
-                  year: "2013",
-                  title: "Expansion",
-                  description: "Expanded our services to include conservatories and specialized coatings.",
-                  image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e"
-                },
-                {
-                  year: "2018",
-                  title: "Innovation",
-                  description: "Introduced cutting-edge energy-efficient solutions and smart home integration.",
-                  image: "https://images.unsplash.com/photo-1531973819741-e27a5ae2cc7b"
-                }
-              ].map((milestone, index) => (
-                <div key={index} className="fade-in flex flex-col md:flex-row items-center gap-8">
-                  <div className="w-full md:w-1/2">
-                    <div className="relative h-64 md:h-96 rounded-2xl overflow-hidden">
-                      <Image
-                        src={milestone.image}
-                        alt={milestone.title}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  </div>
-                  <div className="w-full md:w-1/2">
-                    <div className="bg-blue-600 text-white inline-block px-4 py-1 rounded-full mb-4">
-                      {milestone.year}
-                    </div>
-                    <h3 className="text-2xl font-bold mb-4">{milestone.title}</h3>
-                    <p className="text-gray-600 mb-4">{milestone.description}</p>
-                    <button className="flex items-center text-blue-600 hover:text-blue-700 transition-colors">
-                      Learn more <ChevronRight className="w-4 h-4 ml-2" />
-                    </button>
-                  </div>
-                </div>
-              ))}
+              <div className="p-8">
+                <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">About Us</div>
+                <h1 className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">Crafting Excellence Since 2008</h1>
+                <p className="mt-4 max-w-2xl text-xl text-gray-500">
+                  Scotseal has been at the forefront of home improvement in Scotland, delivering premium windows, doors, and more to create dream homes across the nation.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Team Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20" ref={timelineRef}>
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold mb-12 text-center">Meet Our Team</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {[
-              {
-                name: "David Campbell",
-                role: "Founder & CEO",
-                image: "https://images.unsplash.com/photo-1560250097-0b93528c311a"
-              },
-              {
-                name: "Sarah MacLeod",
-                role: "Head of Operations",
-                image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2"
-              },
-              {
-                name: "James Stewart",
-                role: "Technical Director",
-                image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e"
-              }
-            ].map((member, index) => (
-              <div key={index} className="fade-in">
-                <div className="relative h-96 rounded-2xl overflow-hidden mb-4 group">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                    <div className="text-white">
-                      <h4 className="text-xl font-bold">{member.name}</h4>
-                      <p>{member.role}</p>
-                    </div>
-                  </div>
+          <h2 className="text-3xl font-bold text-center mb-12">Our Journey</h2>
+          <div className="relative">
+            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-blue-200 h-full"></div>
+            <div className="absolute left-1/2 transform -translate-x-1/2 w-3 h-3 bg-blue-500 rounded-full" style={{ top: `${((activeYear - 2008) / (2024 - 2008)) * 100}%` }}></div>
+            {milestones.map((milestone, index) => (
+              <div key={milestone.year} className={`mb-8 flex justify-between items-center w-full ${index % 2 === 0 ? 'flex-row-reverse' : ''}`}>
+                <div className="w-5/12"></div>
+                <div className={`w-5/12 p-4 rounded-lg shadow-md ${milestone.year <= activeYear ? 'bg-blue-100' : 'bg-gray-100'}`}>
+                  <h3 className="text-lg font-semibold">{milestone.year}: {milestone.title}</h3>
+                  <p className="text-gray-600">{milestone.description}</p>
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-gray-100 py-20">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Meet Our Team</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {['Michael', 'Mark', 'Dylan'].map((name, index) => (
+              <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
+                <Image
+                  src={`https://source.unsplash.com/random/400x400?portrait&${index}`}
+                  alt={`${name}'s portrait`}
+                  width={400}
+                  height={400}
+                  className="w-full h-64 object-cover"
+                />
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold mb-2">{name}</h3>
+                  <p className="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Get in Touch</h2>
+          <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
+            <div className="md:flex">
+              <div className="md:flex-shrink-0 bg-blue-600 text-white p-8">
+                <h3 className="text-2xl font-semibold mb-4">Contact Information</h3>
+                <p className="mb-4">Fill out the form and we will get back to you within 24 hours.</p>
+                <ul className="space-y-4">
+                  <li className="flex items-center">
+                    <Phone className="mr-4" />
+                    <span>0141 345 3993</span>
+                  </li>
+                  <li className="flex items-center">
+                    <Mail className="mr-4" />
+                    <span>info@scotseal.com</span>
+                  </li>
+                  <li className="flex items-center">
+                    <MapPin className="mr-4" />
+                    <span>123 Main St, Glasgow, G1 1AA</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="p-8 md:w-2/3">
+                <form className="space-y-4">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+                    <input type="text" id="name" name="name" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" id="email" name="email" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
+                  </div>
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
+                    <textarea id="message" name="message" rows={4} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"></textarea>
+                  </div>
+                  <div>
+                    <button type="submit" className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                      Send Message
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
       </section>
