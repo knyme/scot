@@ -123,14 +123,14 @@ export default function Header() {
                   </div>
                 )}
               </div>
-              <Link href="src/app/about/page.tsx" className="nav-item">About</Link>
-              <Link href="src/app/contact/page.tsx" className="nav-item">Contact</Link>
+              <Link href="/about" className="nav-item">About</Link>
+              <Link href="/contact" className="nav-item">Contact</Link>
             </div>
             <div className="flex items-center space-x-4">
-              <a href="tel:01413453993" className="flex items-center nav-item">
+              <Link href="tel:01413453993" className="flex items-center nav-item">
                 <Phone className="h-5 w-5 mr-2" />
                 0141 345 3993
-              </a>
+              </Link>
               <Link href="/quote" className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Get a quote</Link>
             </div>
           </nav>
