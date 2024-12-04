@@ -78,14 +78,14 @@ export default function Header() {
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-  isHomePage
-    ? isScrolled
-      ? 'bg-gray-800/50 backdrop-blur-md shadow-md text-white'
-      : 'bg-transparent text-white'
-    : isDarkBackground
-    ? 'text-white'
-    : 'text-gray-900'
-}`}>
+      isHomePage
+        ? isScrolled
+          ? 'bg-gray-800/50 backdrop-blur-md shadow-md text-white'
+          : 'bg-transparent text-white'
+        : isDarkBackground
+        ? 'text-white'
+        : 'text-gray-900'
+    }`}>
       <div className={`mx-auto transition-all duration-300 ${isScrolled && isHomePage ? 'max-w-7xl rounded-full my-2' : ''}`}>
         <div className="container mx-auto px-6">
           <nav className="flex justify-between items-center h-16">
@@ -93,8 +93,8 @@ export default function Header() {
               <Image 
                 src="https://images.unsplash.com/photo-1633409361618-c73427e4e206?q=80&w=180&h=180&auto=format&fit=crop"
                 alt="Scotseal - Crafted to shield, built to last" 
-                width={180} 
-                height={180}
+                width={60} 
+                height={60}
                 className="rounded-full"
               />
             </Link>
