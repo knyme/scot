@@ -6,11 +6,7 @@ import Link from 'next/link'
 import { LayoutGrid, DoorOpen, Home, Construction, Paintbrush, ChevronDown, Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, ArrowRight, Star, ExternalLink, Clock, Shield, Zap, ThumbsUp, Sparkles, Users } from 'lucide-react'
 
 export default function Homepage() {
-  const [openService, setOpenService] = useState<string | null>(null)
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
   const [activeProduct, setActiveProduct] = useState(0)
-  const dropdownRef = useRef<HTMLDivElement>(null)
 
   const products = [
     {
@@ -58,132 +54,8 @@ export default function Homepage() {
     }
   ]
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsDropdownOpen(false)
-        setOpenService(null)
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
-
-  const services = [
-    {
-      id: 'windows',
-      icon: LayoutGrid,
-      title: 'Windows',
-      children: ['Casement', 'Tilt and turn', 'Sash']
-    },
-    {
-      id: 'doors',
-      icon: DoorOpen,
-      title: 'Doors',
-      children: ['uPvc', 'Composite', 'French/Patio', 'Bifolds']
-    },
-    {
-      id: 'conservatories',
-      icon: Home,
-      title: 'Conservatories',
-      children: []
-    },
-    {
-      id: 'roofs',
-      icon: Construction,
-      title: 'Roofs',
-      children: []
-    },
-    {
-      id: 'roughcasting',
-      icon: Construction,
-      title: 'Rough casting',
-      children: []
-    },
-    {
-      id: 'coatings',
-      icon: Paintbrush,
-      title: 'Coatings',
-      children: []
-    }
-  ]
-
   return (
     <div className="font-sans">
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-gray-800/50 backdrop-blur-md shadow-md text-white' : 'bg-transparent text-white'}`}>
-        <div className="container mx-auto px-4">
-          <nav className="flex justify-between items-center py-3">
-            <Link href="/" className="flex items-center">
-              <Image src="https://i.ibb.co/5jMQxr1/Shieldforsite.png" alt="Scotseal - Crafted to shield, built to last" width={180} height={180} />
-            </Link>
-            <div className="flex-grow flex justify-center space-x-8">
-              <Link href="/" className="nav-item font-bold">Home</Link>
-              <div className="relative" ref={dropdownRef}>
-                <button
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className={`nav-item inline-flex items-center gap-1 ${isDropdownOpen ? 'nav-item-active' : ''}`}
-                >
-                  Services
-                  <ChevronDown className="h-4 w-4" />
-                </button>
-                {isDropdownOpen && (
-                  <div className="absolute left-0 mt-2 w-64 rounded-lg shadow-lg bg-white/95 backdrop-blur-sm">
-                    <div className="p-2">
-                      {services.map((service) => (
-                        <div key={service.id} className="relative mb-2">
-                          <button
-                            onClick={() => setOpenService(openService === service.id ? null : service.id)}
-                            className={`w-full text-left px-3 py-2 rounded-md text-gray-700 hover:text-gray-900 flex items-center gap-3 relative z-10 transition-all duration-200 ease-in-out dropdown-item ${
-                              openService === service.id ? 'dropdown-item-active' : ''
-                            }`}
-                          >
-                            <service.icon className="h-5 w-5 text-gray-500" />
-                            <span>{service.title}</span>
-                            {service.children.length > 0 && (
-                              <ChevronDown className={`h-4 w-4 ml-auto transition-transform duration-200 ${openService === service.id ? 'rotate-180' : ''}`} />
-                            )}
-                          </button>
-                          {openService === service.id && service.children.length > 0 && (
-                            <div className="ml-10 mt-1 space-y-1 bg-white rounded-md p-2">
-                              {service.children.map((child) => (
-                                <Link
-                                  key={child}
-                                  href={`/services/${service.id}/${child.toLowerCase().replace(/\s+/g, '-')}`}
-                                  className="block px-3 py-1 text-sm text-gray-600 hover:text-gray-900 rounded-md hover:bg-gray-50 dropdown-item"
-                                >
-                                  {child}
-                                </Link>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-              <Link href="/about" className="nav-item">About</Link>
-              <Link href="/contact" className="nav-item">Contact</Link>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Link href="tel:01413453993" className="flex items-center nav-item">
-                <Phone className="h-5 w-5 mr-2" />
-                0141 345 3993
-              </Link>
-              <Link href="/quote" className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">Get a quote</Link>
-            </div>
-          </nav>
-        </div>
-      </header>
-
       <section id="home" className="relative min-h-screen flex items-center bg-cover bg-center">
         <Image
           src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/oliur-POycdKPE8KQ-unsplash.jpg-el6ZLrfC5c529S407Xa0SRoa76LqIL.jpeg"
@@ -217,7 +89,7 @@ export default function Homepage() {
                     Rated 4.9/5
                   </div>
                 </div>
-                <form action="https://formsubmit.co/kendidly@gmail.com" method="POST" className="space-y-4">
+                <form action="https://formsubmit.co/info@scotseal.co.uk" method="POST" className="space-y-4">
                   <div>
                     <label htmlFor="product" className="block text-sm font-medium text-gray-700 mb-1">Select a product</label>
                     <select id="product" name="product" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required>
@@ -411,54 +283,16 @@ export default function Homepage() {
                   <div className="text-sm text-gray-400">avg. response time</div>
                 </div>
               </div>
-              <Link 
+              <a 
                 href="#" 
                 className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
               >
                 See 275+ reviews on Trustpilot →
-              </Link>
+              </a>
             </div>
           </div>
         </div>
       </section>
-
-      <footer className="bg-gray-800 text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Scotseal</h3>
-              <p className="text-sm">Crafted to shield, built to last. Providing premium home improvements across Scotland since 2008.</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-              <ul className="space-y-2">
-                <li><Link href="/" className="hover:text-blue-400 transition-colors">Home</Link></li>
-                <li><Link href="/about" className="hover:text-blue-400 transition-colors">About</Link></li>
-                <li><Link href="/services" className="hover:text-blue-400 transition-colors">Services</Link></li>
-                <li><Link href="/contact" className="hover:text-blue-400 transition-colors">Contact</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Contact</h3>
-              <p className="text-sm mb-2">123 Main St, Glasgow, G1 1AA</p>
-              <p className="text-sm mb-2">Phone: 0141 345 3993</p>
-              <p className="text-sm">Email: info@scotseal.com</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
-              <div className="flex space-x-4">
-                <Link href="#" className="hover:text-blue-400 transition-colors"><Facebook className="w-6 h-6" /></Link>
-                <Link href="#" className="hover:text-blue-400 transition-colors"><Twitter className="w-6 h-6" /></Link>
-                <Link href="#" className="hover:text-blue-400 transition-colors"><Instagram className="w-6 h-6" /></Link>
-                <Link href="#" className="hover:text-blue-400 transition-colors"><Linkedin className="w-6 h-6" /></Link>
-              </div>
-            </div>
-          </div>
-          <div className="mt-8 pt-8 border-t border-gray-700 text-center">
-            <p className="text-sm">&copy; 2024 Scotseal. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }

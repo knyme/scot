@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { ArrowRight, Phone, Mail, MapPin } from 'lucide-react'
 
 export default function About() {
@@ -32,67 +33,79 @@ export default function About() {
   }, [])
 
   return (
-    <div className="font-sans">
-      <section className="bg-gray-100 py-20">
+    <div className="font-sans bg-[#151D2B] text-white">
+      <section className="py-24">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row gap-8">
-            <div className="md:w-1/2">
-              <div className="bg-white rounded-lg shadow-xl overflow-hidden p-8">
-                <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">About Us</div>
-                <h1 className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">Crafting Excellence Since 2008</h1>
-                <p className="mt-4 text-xl text-gray-500">
+          <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
+            <div className="md:flex">
+              <div className="md:w-1/3 relative h-64 md:h-auto">
+                <Image
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/oliur-POycdKPE8KQ-unsplash.jpg-el6ZLrfC5c529S407Xa0SRoa76LqIL.jpeg"
+                  alt="Scotseal office"
+                  layout="fill"
+                  objectFit="cover"
+                />
+                <div className="absolute bottom-0 left-0 p-6 bg-gradient-to-t from-black to-transparent w-full">
+                  <h1 className="text-xl font-bold mb-2">About Scotseal</h1>
+                  <p className="text-sm mb-2">Crafting Excellence Since 2008</p>
+                  <ul className="space-y-2 text-xs">
+                    <li className="flex items-center">
+                      <Phone className="mr-2 h-3 w-3" />
+                      <span>0141 345 3993</span>
+                    </li>
+                    <li className="flex items-center">
+                      <Mail className="mr-2 h-3 w-3" />
+                      <span>info@scotseal.co.uk</span>
+                    </li>
+                    <li className="flex items-center">
+                      <MapPin className="mr-2 h-3 w-3" />
+                      <span>123 Main St, Glasgow, G1 1AA</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div className="p-8 md:w-2/3">
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">Our Story</h2>
+                <p className="text-gray-600 mb-4">
                   Scotseal has been at the forefront of home improvement in Scotland, delivering premium windows, doors, and more to create dream homes across the nation.
                 </p>
-                <p className="mt-4 text-gray-600">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                <p className="text-gray-600 mb-4">
+                  Since our founding in 2008, we've been committed to providing top-quality products and exceptional service to our customers. Our journey has been marked by continuous innovation, expansion, and a dedication to craftsmanship.
                 </p>
-                <p className="mt-4 text-gray-600">
-                  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                <p className="text-gray-600 mb-4">
+                  Today, we're proud to serve homeowners throughout Scotland, offering a wide range of energy-efficient and stylish home improvement solutions.
                 </p>
-              </div>
-            </div>
-            <div className="md:w-1/2" ref={timelineRef}>
-              <h2 className="text-3xl font-bold mb-8">Our Journey</h2>
-              <div className="relative">
-                <div className="absolute left-0 w-1 bg-white h-full"></div>
-                <div 
-                  className="absolute left-0 w-1 bg-blue-200 h-full transition-all duration-500 ease-in-out" 
-                  style={{ height: `${((activeYear - 2008) / (2024 - 2008)) * 100}%` }}
-                ></div>
-                <div 
-                  className="absolute left-0 w-4 h-4 bg-blue-500 rounded-full -ml-2 transition-all duration-500 ease-in-out" 
-                  style={{ top: `${((activeYear - 2008) / (2024 - 2008)) * 100}%` }}
-                ></div>
-                {milestones.map((milestone, index) => (
-                  <div key={milestone.year} className="mb-8 flex items-center w-full">
-                    <div className="w-full bg-white p-4 rounded-lg shadow-md">
-                      <h3 className="text-lg font-semibold">{milestone.year}: {milestone.title}</h3>
-                      <p className="text-gray-600">{milestone.description}</p>
-                    </div>
-                  </div>
-                ))}
+                <Link href="/contact" className="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition-colors mt-4">
+                  Get in Touch
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="bg-white py-20">
+      <section className="py-24" ref={timelineRef}>
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Meet Our Team</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {['Michael', 'Mark', 'Dylan'].map((name, index) => (
-              <div key={index} className="bg-gray-100 rounded-lg shadow-md overflow-hidden">
-                <Image
-                  src={`/img/${name.toLowerCase()}.jpg`}
-                  alt={`${name}'s portrait`}
-                  width={400}
-                  height={400}
-                  className="w-full h-64 object-cover"
-                />
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">{name}</h3>
-                  <p className="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <h2 className="text-4xl font-bold text-center mb-12">Our Journey</h2>
+          <div className="relative max-w-3xl mx-auto">
+            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-white h-full"></div>
+            <div 
+              className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-blue-300 h-full transition-all duration-500 ease-in-out" 
+              style={{ height: `${((activeYear - 2008) / (2024 - 2008)) * 100}%` }}
+            ></div>
+            <div 
+              className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-300 rounded-full transition-all duration-500 ease-in-out" 
+              style={{ top: `${((activeYear - 2008) / (2024 - 2008)) * 100}%` }}
+            ></div>
+            {milestones.map((milestone, index) => (
+              <div key={milestone.year} className={`mb-8 flex justify-between items-center w-full ${index % 2 === 0 ? 'flex-row-reverse' : ''}`}>
+                <div className="w-5/12"></div>
+                <div className="w-5/12">
+                  <div className="bg-white text-gray-800 p-4 rounded-lg shadow-md">
+                    <h3 className="text-lg font-semibold">{milestone.year}: {milestone.title}</h3>
+                    <p className="text-gray-600">{milestone.description}</p>
+                  </div>
                 </div>
               </div>
             ))}
@@ -100,55 +113,25 @@ export default function About() {
         </div>
       </section>
 
-      <section className="bg-gray-100 py-20">
+      <section className="bg-[#1E293B] py-24">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Get in Touch</h2>
-          <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
-            <div className="md:flex">
-              <div className="md:flex-shrink-0 bg-blue-600 text-white p-8">
-                <h3 className="text-2xl font-semibold mb-4">Contact Information</h3>
-                <p className="mb-4">Fill out the form and we will get back to you within 24 hours.</p>
-                <ul className="space-y-4">
-                  <li className="flex items-center">
-                    <Phone className="mr-4" />
-                    <span>0141 345 3993</span>
-                  </li>
-                  <li className="flex items-center">
-                    <Mail className="mr-4" />
-                    <span>info@scotseal.co.uk</span>
-                  </li>
-                  <li className="flex items-center">
-                    <MapPin className="mr-4" />
-                    <span>123 Main St, Glasgow, G1 1AA</span>
-                  </li>
-                </ul>
+          <h2 className="text-4xl font-bold text-center mb-12">Meet Our Team</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {['Michael', 'Mark', 'Dylan'].map((name, index) => (
+              <div key={index} className="bg-white rounded-lg overflow-hidden shadow-lg">
+                <Image
+                  src={`https://hebbkx1anhila5yf.public.blob.vercel-storage.com/oliur-POycdKPE8KQ-unsplash.jpg-el6ZLrfC5c529S407Xa0SRoa76LqIL.jpeg`}
+                  alt={`${name}'s portrait`}
+                  width={400}
+                  height={400}
+                  className="w-full h-64 object-cover"
+                />
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold mb-2 text-gray-800">{name}</h3>
+                  <p className="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                </div>
               </div>
-              <div className="p-8 md:w-2/3">
-                <form action="https://formsubmit.co/info@scotseal.co.uk" method="POST" className="space-y-4">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
-                    <input type="text" id="name" name="name" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" id="email" name="email" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
-                  </div>
-                  <div>
-                    <label htmlFor="address" className="block text-sm font-medium text-gray-700">Address</label>
-                    <input type="text" id="address" name="address" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
-                  </div>
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
-                    <textarea id="message" name="message" rows={4} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"></textarea>
-                  </div>
-                  <div>
-                    <button type="submit" className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                      Send Message
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
