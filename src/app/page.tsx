@@ -316,7 +316,7 @@ export default function Homepage() {
 }
 
 
-```typescriptreact type="react" project="Scotseal" file="src/components/EligibilityCheck/index.tsx"
+'typescriptreact type="react" project="Scotseal" file="src/components/EligibilityCheck/index.tsx"
 'use client'
 
 import { useState } from 'react'
@@ -328,12 +328,12 @@ interface EligibilityCheckProps {
 
 export default function EligibilityCheck({ onBack }: EligibilityCheckProps) {
   const [step, setStep] = useState(0)
-  const [postcode, setPostcode] = useState('')
+  const [postcode, setPostcode] = useState<string>('')
   const [isHomeowner, setIsHomeowner] = useState<boolean | null>(null)
   const [oldestWindowsAge, setOldestWindowsAge] = useState(1)
-  const [fullName, setFullName] = useState('')
-  const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
+  const [fullName, setFullName] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
+  const [phone, setPhone] = useState<string>('')
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
