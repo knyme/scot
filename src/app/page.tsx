@@ -316,7 +316,7 @@ export default function Homepage() {
 }
 
 
-'typescriptreact type="react" project="Scotseal" file="src/components/EligibilityCheck/index.tsx"
+
 'use client'
 
 import { useState } from 'react'
