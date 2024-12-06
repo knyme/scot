@@ -82,8 +82,8 @@ export default function Homepage() {
             </div>
           </div>
           <div className="lg:w-1/2 mt-8 lg:mt-0 w-full max-w-lg mx-auto">
-            <div className="bg-white rounded-lg shadow-xl overflow-hidden flex">
-              <div className="p-6 md:p-8 flex-1">
+            <div className="bg-white rounded-lg shadow-xl overflow-hidden flex h-[600px]">
+              <div className="p-6 md:p-8 flex-1 overflow-y-auto">
                 {showEligibilityCheck ? (
                   <EligibilityCheck onBack={() => setShowEligibilityCheck(false)} />
                 ) : (
@@ -98,13 +98,13 @@ export default function Homepage() {
                       </div>
                       <button
                         onClick={() => setShowEligibilityCheck(true)}
-                        className="w-full bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium hover:bg-blue-200 transition-colors"
+                        className="w-full bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium hover:bg-blue-200 transition-colors whitespace-nowrap overflow-hidden text-ellipsis"
                       >
                         Check if you qualify for government backed grants
                       </button>
                     </div>
                     <form action="https://formsubmit.co/info@scotseal.co.uk" method="POST" className="space-y-4">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 gap-4">
                         <div>
                           <label htmlFor="product" className="block text-sm font-medium text-gray-700 mb-1">Select a product</label>
                           <select id="product" name="product" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required>
@@ -115,13 +115,15 @@ export default function Homepage() {
                             <option value="roofing">Roofing</option>
                           </select>
                         </div>
-                        <div>
-                          <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">First name</label>
-                          <input type="text" id="firstName" name="firstName" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required />
-                        </div>
-                        <div>
-                          <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">Last name</label>
-                          <input type="text" id="lastName" name="lastName" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required />
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">First name</label>
+                            <input type="text" id="firstName" name="firstName" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required />
+                          </div>
+                          <div>
+                            <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">Last name</label>
+                            <input type="text" id="lastName" name="lastName" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required />
+                          </div>
                         </div>
                         <div>
                           <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Contact number</label>
@@ -131,13 +133,15 @@ export default function Homepage() {
                           <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email address</label>
                           <input type="email" id="email" name="email" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required />
                         </div>
-                        <div>
-                          <label htmlFor="houseNumber" className="block text-sm font-medium text-gray-700 mb-1">House name/number</label>
-                          <input type="text" id="houseNumber" name="houseNumber" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required />
-                        </div>
-                        <div>
-                          <label htmlFor="postcode" className="block text-sm font-medium text-gray-700 mb-1">Postcode</label>
-                          <input type="text" id="postcode" name="postcode" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required />
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <label htmlFor="houseNumber" className="block text-sm font-medium text-gray-700 mb-1">House name/number</label>
+                            <input type="text" id="houseNumber" name="houseNumber" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required />
+                          </div>
+                          <div>
+                            <label htmlFor="postcode" className="block text-sm font-medium text-gray-700 mb-1">Postcode</label>
+                            <input type="text" id="postcode" name="postcode" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required />
+                          </div>
                         </div>
                       </div>
                       <button type="submit" className="w-full bg-blue-600 text-white px-4 py-3 rounded-md font-semibold hover:bg-blue-700 transition-colors">
@@ -307,6 +311,199 @@ export default function Homepage() {
           </div>
         </div>
       </section>
+    </div>
+  )
+}
+```[v0-no-op-code-block-prefix]
+
+Now, let's update the EligibilityCheck component to ensure it fits well within the new layout:
+
+```typescriptreact type="react" project="Scotseal" file="src/components/EligibilityCheck/index.tsx"
+'use client'
+
+import { useState } from 'react'
+import { ArrowRight, ArrowLeft } from 'lucide-react'
+
+interface EligibilityCheckProps {
+  onBack: () => void;
+}
+
+export default function EligibilityCheck({ onBack }: EligibilityCheckProps) {
+  const [step, setStep] = useState(0)
+  const [postcode, setPostcode] = useState('')
+  const [isHomeowner, setIsHomeowner] = useState<boolean | null>(null)
+  const [oldestWindowsAge, setOldestWindowsAge] = useState(1)
+  const [fullName, setFullName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (step < 3) {
+      setStep(step + 1)
+    } else {
+      // Here you would typically send the data to your backend
+      console.log('Form submitted:', { postcode, isHomeowner, oldestWindowsAge, fullName, email, phone })
+      setStep(4) // Move to the final step
+    }
+  }
+
+  return (
+    <div className="h-full flex flex-col">
+      <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto">
+        {step === 0 && (
+          <>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-bold">Check Eligibility</h2>
+              <button
+                type="button"
+                onClick={onBack}
+                className="text-blue-600 hover:text-blue-800 transition-colors"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="mb-4">
+              <label htmlFor="postcode" className="block text-sm font-medium text-gray-700 mb-1">Enter postcode</label>
+              <input
+                type="text"
+                id="postcode"
+                value={postcode}
+                onChange={(e) => setPostcode(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                required
+              />
+            </div>
+          </>
+        )}
+
+        {step === 1 && (
+          <>
+            <h2 className="text-2xl font-bold mb-4">Step 1</h2>
+            <div className="mb-4">
+              <p className="mb-2">Are you a homeowner?</p>
+              <div className="flex space-x-4">
+                <button
+                  type="button"
+                  onClick={() => setIsHomeowner(true)}
+                  className={`px-4 py-2 rounded-md ${isHomeowner === true ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+                >
+                  Yes
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsHomeowner(false)}
+                  className={`px-4 py-2 rounded-md ${isHomeowner === false ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+                >
+                  No
+                </button>
+              </div>
+            </div>
+            <div className="mb-4">
+              <label htmlFor="windowsAge" className="block text-sm font-medium text-gray-700 mb-1">
+                How old are your oldest windows or doors in your home?
+              </label>
+              <input
+                type="range"
+                id="windowsAge"
+                min="1"
+                max="5"
+                value={oldestWindowsAge}
+                onChange={(e) => setOldestWindowsAge(parseInt(e.target.value))}
+                className="w-full"
+              />
+              <div className="flex justify-between text-sm text-gray-600">
+                <span>1 year</span>
+                <span>2 years</span>
+                <span>3 years</span>
+                <span>4 years</span>
+                <span>5+ years</span>
+              </div>
+            </div>
+          </>
+        )}
+
+        {step === 2 && (
+          <>
+            <h2 className="text-2xl font-bold mb-4">Step 2</h2>
+            <div className="mb-4">
+              <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">Full name</label>
+              <input
+                type="text"
+                id="fullName"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email address</label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+              <input
+                type="tel"
+                id="phone"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="postcode" className="block text-sm font-medium text-gray-700 mb-1">Postcode</label>
+              <input
+                type="text"
+                id="postcode"
+                value={postcode}
+                onChange={(e) => setPostcode(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                required
+              />
+            </div>
+          </>
+        )}
+
+        {step === 3 && (
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold">Congratulations! You qualify!</h2>
+            <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded">
+              <p className="font-bold">What happens next?</p>
+              <ul className="list-disc list-inside mt-2 space-y-2">
+                <li>Register your interest with one of our specialists</li>
+                <li>Expect a call within 48 hours</li>
+                <li>Schedule a free survey</li>
+                <li>Choose your styles and colours</li>
+                <li>Enjoy your new, updated home!</li>
+              </ul>
+            </div>
+            <p className="text-sm text-gray-600">
+              Note: There are limited spaces for the scheme, so please ensure you register your interest promptly.
+            </p>
+          </div>
+        )}
+
+        {step < 3 && (
+          <div className="mt-auto pt-4">
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center"
+            >
+              {step === 2 ? 'Check if you qualify' : 'Next'}
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </button>
+          </div>
+        )}
+      </form>
     </div>
   )
 }
