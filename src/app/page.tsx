@@ -82,18 +82,26 @@ export default function Homepage() {
             </div>
           </div>
           <div className="lg:w-1/2 mt-8 lg:mt-0 w-full max-w-lg mx-auto">
-            <div className="bg-white rounded-lg shadow-xl overflow-hidden">
-              <div className="p-6 md:p-8">
+            <div className="bg-white rounded-lg shadow-xl overflow-hidden flex">
+              <div className="p-6 md:p-8 flex-1">
                 {showEligibilityCheck ? (
-                  <EligibilityCheck />
+                  <EligibilityCheck onBack={() => setShowEligibilityCheck(false)} />
                 ) : (
                   <>
-                    <div className="flex justify-between items-center mb-6">
-                      <h2 className="text-2xl font-bold text-gray-800">Get a price</h2>
-                      <div className="flex items-center bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
-                        <Star className="w-4 h-4 mr-1" />
-                        Rated 4.9/5
+                    <div className="mb-6">
+                      <div className="flex justify-between items-center mb-2">
+                        <h2 className="text-2xl font-bold text-gray-800">Get a price</h2>
+                        <div className="flex items-center bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
+                          <Star className="w-4 h-4 mr-1" />
+                          Rated 4.9/5
+                        </div>
                       </div>
+                      <button
+                        onClick={() => setShowEligibilityCheck(true)}
+                        className="w-full bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium hover:bg-blue-200 transition-colors"
+                      >
+                        Check if you qualify for government backed grants
+                      </button>
                     </div>
                     <form action="https://formsubmit.co/info@scotseal.co.uk" method="POST" className="space-y-4">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -139,14 +147,16 @@ export default function Homepage() {
                     <p className="mt-4 text-sm text-gray-600">
                       By providing your details you agree to being contacted and your data being processed under the terms of our <a href="/privacy-policy" className="text-blue-600 hover:underline">privacy policy</a>.
                     </p>
-                    <button
-                      onClick={() => setShowEligibilityCheck(true)}
-                      className="mt-4 text-blue-600 hover:underline text-sm"
-                    >
-                      Looking for new doors or windows? Check if you qualify for government backed grants by clicking here
-                    </button>
                   </>
                 )}
+              </div>
+              <div className="hidden md:block w-1/2 relative">
+                <Image
+                  src="https://images.unsplash.com/photo-1653749576880-7d7caa5ecb62?q=80&w=3687&auto=format&fit=crop"
+                  alt="Modern home interior"
+                  layout="fill"
+                  objectFit="cover"
+                />
               </div>
             </div>
           </div>
