@@ -56,7 +56,7 @@ export default function Homepage() {
 
   return (
     <div className="font-sans">
-      <section id="home" className="relative min-h-screen flex items-center bg-cover bg-center">
+      <section id="home" className="relative min-h-screen flex items-center bg-cover bg-center pt-24 md:pt-32">
         <Image
           src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/oliur-POycdKPE8KQ-unsplash.jpg-el6ZLrfC5c529S407Xa0SRoa76LqIL.jpeg"
           alt="Hero background"
@@ -65,8 +65,8 @@ export default function Homepage() {
           quality={100}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black to-transparent opacity-70"></div>
-        <div className="container mx-auto px-4 relative z-10 flex flex-col md:flex-row items-center">
-          <div className="text-white md:w-1/2 mb-8 md:mb-0">
+        <div className="container mx-auto px-4 relative z-10 flex flex-col lg:flex-row items-center">
+          <div className="text-white lg:w-1/2 mb-8 lg:mb-0">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4">Transform Your Home with Excellence</h1>
             <p className="text-xl mb-8 opacity-90">Premium windows, doors, and home improvements. Creating dream homes across Scotland since 2008.</p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
@@ -79,7 +79,7 @@ export default function Homepage() {
               </Link>
             </div>
           </div>
-          <div className="md:w-1/2 mt-8 md:mt-0">
+          <div className="lg:w-1/2 mt-8 lg:mt-0 w-full max-w-md mx-auto">
             <div className="bg-white rounded-lg shadow-xl flex overflow-hidden">
               <div className="w-full md:w-1/2 p-8">
                 <div className="flex justify-between items-center mb-6">
