@@ -1,11 +1,13 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { LayoutGrid, DoorOpen, Home, Construction, Paintbrush, ChevronDown, Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, ArrowRight, Star, ExternalLink, Clock, Shield, Zap, ThumbsUp, Sparkles, Users } from 'lucide-react'
+import { ArrowRight, Star, Shield, Zap, ThumbsUp, Sparkles, Users } from 'lucide-react'
+import EligibilityCheck from '@/components/EligibilityCheck'
 
 export default function Homepage() {
+  const [showEligibilityCheck, setShowEligibilityCheck] = useState(false)
   const [activeProduct, setActiveProduct] = useState(0)
 
   const products = [
@@ -79,70 +81,72 @@ export default function Homepage() {
               </Link>
             </div>
           </div>
-          <div className="lg:w-1/2 mt-8 lg:mt-0 w-full max-w-md mx-auto">
-            <div className="bg-white rounded-lg shadow-xl flex overflow-hidden">
-              <div className="w-full md:w-1/2 p-8">
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-2xl font-bold text-gray-800">Get a price</h2>
-                  <div className="flex items-center bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
-                    <Star className="w-4 h-4 mr-1" />
-                    Rated 4.9/5
-                  </div>
-                </div>
-                <form action="https://formsubmit.co/info@scotseal.co.uk" method="POST" className="space-y-4">
-                  <div>
-                    <label htmlFor="product" className="block text-sm font-medium text-gray-700 mb-1">Select a product</label>
-                    <select id="product" name="product" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required>
-                      <option value="">Select a product</option>
-                      <option value="windows">Windows</option>
-                      <option value="doors">Doors</option>
-                      <option value="conservatory">Conservatory</option>
-                      <option value="roofing">Roofing</option>
-                    </select>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">First name</label>
-                      <input type="text" id="firstName" name="firstName" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required />
+          <div className="lg:w-1/2 mt-8 lg:mt-0 w-full max-w-lg mx-auto">
+            <div className="bg-white rounded-lg shadow-xl overflow-hidden">
+              <div className="p-6 md:p-8">
+                {showEligibilityCheck ? (
+                  <EligibilityCheck />
+                ) : (
+                  <>
+                    <div className="flex justify-between items-center mb-6">
+                      <h2 className="text-2xl font-bold text-gray-800">Get a price</h2>
+                      <div className="flex items-center bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
+                        <Star className="w-4 h-4 mr-1" />
+                        Rated 4.9/5
+                      </div>
                     </div>
-                    <div>
-                      <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">Last name</label>
-                      <input type="text" id="lastName" name="lastName" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required />
-                    </div>
-                  </div>
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Contact number</label>
-                    <input type="tel" id="phone" name="phone" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required />
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email address</label>
-                    <input type="email" id="email" name="email" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required />
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label htmlFor="houseNumber" className="block text-sm font-medium text-gray-700 mb-1">House name/number</label>
-                      <input type="text" id="houseNumber" name="houseNumber" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required />
-                    </div>
-                    <div>
-                      <label htmlFor="postcode" className="block text-sm font-medium text-gray-700 mb-1">Postcode</label>
-                      <input type="text" id="postcode" name="postcode" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required />
-                    </div>
-                  </div>
-                  <button type="submit" className="w-full bg-blue-600 text-white px-4 py-3 rounded-md font-semibold hover:bg-blue-700 transition-colors">
-                    Get in touch
-                  </button>
-                </form>
-                <p className="mt-4 text-sm text-gray-600">
-                By providing your details you agree to being contacted and your data being processed under the terms of our <a href="/privacy-policy" className="text-blue-600 hover:underline">privacy policy</a>.
-                </p>
-              </div>
-              <div className="hidden md:block w-1/2 relative">
-                <Image
-                  src="https://images.unsplash.com/photo-1653749576880-7d7caa5ecb62?q=80&w=3687&auto=format&fit=crop"
-                  alt="Modern home interior"
-                  layout="fill"
-                  objectFit="cover"
-                />
+                    <form action="https://formsubmit.co/info@scotseal.co.uk" method="POST" className="space-y-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <label htmlFor="product" className="block text-sm font-medium text-gray-700 mb-1">Select a product</label>
+                          <select id="product" name="product" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required>
+                            <option value="">Select a product</option>
+                            <option value="windows">Windows</option>
+                            <option value="doors">Doors</option>
+                            <option value="conservatory">Conservatory</option>
+                            <option value="roofing">Roofing</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">First name</label>
+                          <input type="text" id="firstName" name="firstName" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required />
+                        </div>
+                        <div>
+                          <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">Last name</label>
+                          <input type="text" id="lastName" name="lastName" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required />
+                        </div>
+                        <div>
+                          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Contact number</label>
+                          <input type="tel" id="phone" name="phone" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required />
+                        </div>
+                        <div>
+                          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email address</label>
+                          <input type="email" id="email" name="email" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required />
+                        </div>
+                        <div>
+                          <label htmlFor="houseNumber" className="block text-sm font-medium text-gray-700 mb-1">House name/number</label>
+                          <input type="text" id="houseNumber" name="houseNumber" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required />
+                        </div>
+                        <div>
+                          <label htmlFor="postcode" className="block text-sm font-medium text-gray-700 mb-1">Postcode</label>
+                          <input type="text" id="postcode" name="postcode" className="w-full px-3 py-2 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required />
+                        </div>
+                      </div>
+                      <button type="submit" className="w-full bg-blue-600 text-white px-4 py-3 rounded-md font-semibold hover:bg-blue-700 transition-colors">
+                        Get in touch
+                      </button>
+                    </form>
+                    <p className="mt-4 text-sm text-gray-600">
+                      By providing your details you agree to being contacted and your data being processed under the terms of our <a href="/privacy-policy" className="text-blue-600 hover:underline">privacy policy</a>.
+                    </p>
+                    <button
+                      onClick={() => setShowEligibilityCheck(true)}
+                      className="mt-4 text-blue-600 hover:underline text-sm"
+                    >
+                      Looking for new doors or windows? Check if you qualify for government backed grants by clicking here
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>

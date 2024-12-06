@@ -76,7 +76,7 @@ export default function Header() {
         <nav className="flex justify-between items-center py-4">
           <Link href="/" className="flex items-center">
             <Image 
-              src={isScrolled ? "/img/logo.png" : "/img/logodark.png"} 
+              src="/img/logo.png"
               alt="Scotseal - Crafted to shield, built to last" 
               width={180} 
               height={180}
@@ -97,7 +97,7 @@ export default function Header() {
           </button>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex flex-grow justify-center items-center space-x-8">
             <Link href="/" className="text-white hover:text-gray-200 transition-colors">Home</Link>
             <div className="relative" ref={dropdownRef}>
               <button
@@ -143,6 +143,10 @@ export default function Header() {
             </div>
             <Link href="/about" className="text-white hover:text-gray-200 transition-colors">About</Link>
             <Link href="/contact" className="text-white hover:text-gray-200 transition-colors">Contact</Link>
+          </div>
+
+          {/* Desktop CTA */}
+          <div className="hidden md:flex items-center space-x-4">
             <Link href="tel:01413453993" className="flex items-center text-white hover:text-gray-200 transition-colors">
               <Phone className="h-5 w-5 mr-2" />
               0141 345 3993
