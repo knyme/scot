@@ -311,12 +311,10 @@ export default function Homepage() {
           </div>
         </div>
       </section>
-    </div>
+  </div>
   )
 }
-```[v0-no-op-code-block-prefix]
 
-Now, let's update the EligibilityCheck component to ensure it fits well within the new layout:
 
 ```typescriptreact type="react" project="Scotseal" file="src/components/EligibilityCheck/index.tsx"
 'use client'
